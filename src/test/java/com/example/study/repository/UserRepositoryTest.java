@@ -3,6 +3,7 @@ package com.example.study.repository;
 
 import com.example.study.StudyApplicationTests;
 import com.example.study.model.entity.User;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,19 +55,17 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
     @Test
     public void delete() {
-        Optional<User> user = userRepository.findById(2L);
+        Optional<User> user = userRepository.findById(1L);
+
+        Assert.assertTrue(user.isPresent()); // 반드시 값이 존재해야 한다. (true)
 
         user.ifPresent(selectUser -> {
             userRepository.delete(selectUser);
         });
 
-        Optional<User> deleteUser = userRepository.findById(2L);
+        Optional<User> deleteUser = userRepository.findById(1L);
 
-        if (deleteUser.isPresent()) {
-            System.out.println("데이터 존재 : " + deleteUser.get());
-        } else {
-            System.out.println("데이터 삭제 데이터 없음");
-        }
+        Assert.assertFalse(deleteUser.isPresent()); // 값이 삭제되었으므로 존재하지 않아야 한다. (false)
     }
 
 }
