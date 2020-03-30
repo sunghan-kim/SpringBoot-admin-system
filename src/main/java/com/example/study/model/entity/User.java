@@ -2,11 +2,13 @@ package com.example.study.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity // == table
 //@Table(name = "user") // 클래스 이름이 테이블 이름과 동일하면 자동으로 mapping 된다.
