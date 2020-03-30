@@ -5,8 +5,10 @@ import com.example.study.StudyApplicationTests;
 import com.example.study.model.entity.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 public class UserRepositoryTest extends StudyApplicationTests {
@@ -27,8 +29,14 @@ public class UserRepositoryTest extends StudyApplicationTests {
         System.out.println("newUser : " + newUser);
     }
 
+    @Test
     public void read() {
+        Optional<User> user = userRepository.findById(2L);
 
+        user.ifPresent(selectUser -> { // ifPresent : 있을 경우
+            System.out.println("selectUser : " + selectUser);
+            System.out.println("email : " + selectUser.getEmail());
+        });
     }
 
     public void update() {
