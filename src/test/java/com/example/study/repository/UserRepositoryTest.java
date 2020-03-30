@@ -6,6 +6,7 @@ import com.example.study.model.entity.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
@@ -41,6 +42,7 @@ public class UserRepositoryTest extends StudyApplicationTests {
     }
 
     @Test
+    @Transactional
     public void update() {
         Optional<User> user = userRepository.findById(2L);
 
@@ -54,8 +56,9 @@ public class UserRepositoryTest extends StudyApplicationTests {
     }
 
     @Test
+    @Transactional // 모든 메서드들은 실행되지만 실제 데이터에 대한 동작은 이뤄지지 않는다. (마지막에 다시 rollback을 해준다.)
     public void delete() {
-        Optional<User> user = userRepository.findById(1L);
+        Optional<User> user = userRepository.findById(3L);
 
         Assert.assertTrue(user.isPresent()); // 반드시 값이 존재해야 한다. (true)
 
@@ -63,7 +66,7 @@ public class UserRepositoryTest extends StudyApplicationTests {
             userRepository.delete(selectUser);
         });
 
-        Optional<User> deleteUser = userRepository.findById(1L);
+        Optional<User> deleteUser = userRepository.findById(3L);
 
         Assert.assertFalse(deleteUser.isPresent()); // 값이 삭제되었으므로 존재하지 않아야 한다. (false)
     }
