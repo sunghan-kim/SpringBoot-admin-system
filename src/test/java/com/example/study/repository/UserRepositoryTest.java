@@ -39,8 +39,17 @@ public class UserRepositoryTest extends StudyApplicationTests {
         });
     }
 
+    @Test
     public void update() {
+        Optional<User> user = userRepository.findById(2L);
 
+        user.ifPresent(selectUser -> {
+            selectUser.setAccount("PPPP");
+            selectUser.setUpdatedAt(LocalDateTime.now());
+            selectUser.setUpdatedBy("update method()");
+
+            userRepository.save(selectUser);
+        });
     }
 
     public void delete() {
