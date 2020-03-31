@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,7 +19,9 @@ public class OrderDetail {
 
     private LocalDateTime orderAt;
 
-    private Long userId;
+    // N : 1
+    @ManyToOne
+    private User user; // Hibernate를 통한 연관관계 설정 시 반드시 객체를 지정해줘야 한다. 객체를 지정하면 Hibernate에서 알아서 해당 객체의 id를 찾아간다.
 
     private Long itemId;
 

@@ -31,12 +31,14 @@ public class UserRepositoryTest extends StudyApplicationTests {
     }
 
     @Test
+    @Transactional
     public void read() {
-        Optional<User> user = userRepository.findById(1L);
+        Optional<User> user = userRepository.findById(2L);
 
         user.ifPresent(selectUser -> { // ifPresent : 있을 경우
-            System.out.println("selectUser : " + selectUser);
-            System.out.println("email : " + selectUser.getEmail());
+            selectUser.getOrderDetailList().stream().forEach(detail -> {
+                System.out.println(detail.getItemId());
+            });
         });
     }
 
