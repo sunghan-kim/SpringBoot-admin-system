@@ -34,7 +34,12 @@ public class UserRepositoryTest extends StudyApplicationTests {
     @Test
     @Transactional
     public void read() {
-        Optional<User> user = userRepository.findById(2L);
+
+        // findById : select * from user where id = ?
+//        Optional<User> user = userRepository.findById(2L);
+
+        // findByAccount : select * from user where account = ?
+        Optional<User> user = userRepository.findByAccount("TestUser03");
 
         user.ifPresent(selectUser -> { // ifPresent : 있을 경우
             selectUser.getOrderDetailList().stream().forEach(detail -> {
