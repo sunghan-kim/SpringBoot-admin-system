@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -33,7 +32,7 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
     @Test
     public void read() {
-        Optional<User> user = userRepository.findById(2L);
+        Optional<User> user = userRepository.findById(1L);
 
         user.ifPresent(selectUser -> { // ifPresent : 있을 경우
             System.out.println("selectUser : " + selectUser);
