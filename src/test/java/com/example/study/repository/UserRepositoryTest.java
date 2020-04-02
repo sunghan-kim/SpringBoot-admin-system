@@ -2,7 +2,6 @@ package com.example.study.repository;
 
 
 import com.example.study.StudyApplicationTests;
-import com.example.study.model.entity.Item;
 import com.example.study.model.entity.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,33 +19,13 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
     @Test
     public void create() {
-        User user = new User();
-        user.setAccount("TestUser03");
-        user.setEmail("TestUser03@gmail.com");
-        user.setPhoneNumber("010-1111-3333");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("TestUser3");
 
-        User newUser = userRepository.save(user);
-        System.out.println("newUser : " + newUser);
     }
 
     @Test
     @Transactional
     public void read() {
 
-        // findById : select * from user where id = ?
-//        Optional<User> user = userRepository.findById(2L);
-
-        // findByAccount : select * from user where account = ?
-        Optional<User> user = userRepository.findByAccount("TestUser03");
-
-        user.ifPresent(selectUser -> { // ifPresent : 있을 경우
-            selectUser.getOrderDetailList().stream().forEach(detail -> {
-                Item item = detail.getItem();
-                System.out.println(item);
-            });
-        });
     }
 
     @Test
