@@ -12,22 +12,32 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class OrderDetail {
+public class OrderGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL의 경우 GenerationType.IDENTITY로 설정
     private Long id;
 
     private String status;
 
-    private LocalDateTime arrivalDate;
+    private String orderType; // 주문의 형태 - 일괄 / 개별
 
-    private Integer quantity;
+    private String revAddress; // 수신 주소
+
+    private String revName; // 수신인
+
+    private String paymentType; // 카드 / 현금
 
     private BigDecimal totalPrice;
+
+    private Integer totalQuantity;
+
+    private LocalDateTime orderAt;
+
+    private LocalDateTime arrivalDate;
 
     private LocalDateTime createdAt;
 

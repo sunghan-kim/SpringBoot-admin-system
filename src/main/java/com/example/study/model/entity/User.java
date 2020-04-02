@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,9 +24,17 @@ public class User {
     //@Column(name = "account") // 필드의 이름과 테이블 컬럼의 이름이 동일하면 자동으로 mapping 된다.
     private String account;
 
+    private String password;
+
+    private String status;
+
     private String email;
 
     private String phoneNumber;
+
+    private LocalDateTime registeredAt;
+
+    private LocalDateTime unregisteredAt;
 
     private LocalDateTime createdAt;
 
@@ -33,9 +43,5 @@ public class User {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
-
-    // 1 : N
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user") // mappedBy는 OrderDetail에서 지정한 변수명을 사용한다.
-    private List<OrderDetail> orderDetailList;
 
 }
