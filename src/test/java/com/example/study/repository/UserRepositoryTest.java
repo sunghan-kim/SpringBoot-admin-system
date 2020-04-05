@@ -38,6 +38,13 @@ public class UserRepositoryTest extends StudyApplicationTests {
 //        user.setCreatedAt(createdAt);
 //        user.setCreatedBy(createdBy);
 
+        User u = User.builder()
+                .account(account)
+                .password(password)
+                .status(status)
+                .email(email)
+                .build();
+
         User newUser = userRepository.save(user);
 
         Assert.assertNotNull(newUser);
@@ -47,6 +54,12 @@ public class UserRepositoryTest extends StudyApplicationTests {
     @Transactional
     public void read() {
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+
+        // User 객체의 @Accessors(chain = true) 설정을 통해 update 시 set 메서드를 연속해서 사용할 수 있다.
+        // 방법 1)
+//        user.setEmail("").setPhoneNumber("").setStatus("");
+        // 방법 2)
+//        User u = new User().setAccount("").setEmail("").setPassword("");
 
         if (user != null) {
             user.getOrderGroupList().stream().forEach(orderGroup -> {
