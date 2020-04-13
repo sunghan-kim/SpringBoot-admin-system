@@ -1,0 +1,14 @@
+{
+ "transaction_time":"2019-08-16T00:18:03.627",
+ "result_code": "OK",
+ "description": "OK",
+ "data":{
+ "status":"REGISTERED",
+ "name": "전자노트북 S10",
+ "title": "전자노트북",
+ "content": "2019년 여름 한정판 노트북!!!",
+ "price": 998000,
+ "brand_name": "전자가전",
+ "partner_id": 1
+ }
+}
