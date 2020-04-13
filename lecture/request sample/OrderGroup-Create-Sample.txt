@@ -1,0 +1,14 @@
+{
+ "transaction_time":"2019-08-16T00:18:03.627",
+ "data":{
+ "status":"COMPLETE",
+ "order_type": "ALL",
+ "rev_address": "서울시 강남구",
+ "rev_name": "홍길동",
+ "payment_type": "CARD",
+ "total_price": 75000,
+ "total_quantity": 3,
+ "order_at": "2019-07-29T00:25:29",
+ "user_id": 2
+ }
+}
