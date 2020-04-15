@@ -4,6 +4,7 @@ import com.example.study.model.entity.OrderGroup;
 import com.example.study.model.network.Header;
 import com.example.study.model.network.request.OrderGroupApiRequest;
 import com.example.study.model.network.response.OrderGroupApiResponse;
+import com.example.study.model.network.response.UserOrderInfoApiResponse;
 import com.example.study.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -97,7 +98,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
         return Header.OK(orderGroupApiResponseList);
     }
 
-    private OrderGroupApiResponse response(OrderGroup orderGroup) {
+    public OrderGroupApiResponse response(OrderGroup orderGroup) {
         OrderGroupApiResponse body = OrderGroupApiResponse.builder()
                 .id(orderGroup.getId())
                 .status(orderGroup.getStatus())
@@ -113,5 +114,10 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
                 .build();
 
         return body;
+    }
+
+    @Override
+    public Header<UserOrderInfoApiResponse> orderInfo(Long id) {
+        return null;
     }
 }
