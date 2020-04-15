@@ -1,0 +1,15 @@
+# sql을 이용한 테스트 데이터 생성 방법
+
+1. truncate문을 이용해 기존 테이블 데이터 삭제
+
+2. MySQL Workbench의 상단에 Server > Data Import 선택
+
+3. "Import from Dump Project Folder"에 덤프 sql 파일들이 위치한 폴더 선택
+
+4. 좌측 하단에 표출된 스키마 선택
+
+5. 우측 하단에 데이터 입력 대상으로 지정된 테이블 목록 확인
+
+6. 우측 하단 가장자리의 "Start Import" 클릭
+
+7. 진행이 완료된 후 데이터가 잘 들어왔는 지 확인
