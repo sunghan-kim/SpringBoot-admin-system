@@ -6,9 +6,13 @@ import com.example.study.model.network.request.ItemApiRequest;
 import com.example.study.model.network.response.ItemApiResponse;
 import com.example.study.repository.PartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResponse, Item> {
@@ -33,13 +37,14 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
 
         Item newItem = baseRepository.save(item);
 
-        return response(newItem);
+        return Header.OK(response(newItem));
     }
 
     @Override
     public Header<ItemApiResponse> read(Long id) {
         return baseRepository.findById(id)
                 .map(item -> response(item))
+                .map(Header::OK)
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
@@ -63,6 +68,7 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 })
                 .map(newEntityItem -> baseRepository.save(newEntityItem))
                 .map(item -> response(item))
+                .map(Header::OK)
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
@@ -77,7 +83,18 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
-    private Header<ItemApiResponse> response(Item item) {
+    @Override
+    public Header<List<ItemApiResponse>> search(Pageable pageable) {
+        Page<Item> items = baseRepository.findAll(pageable);
+
+        List<ItemApiResponse> itemList = items.stream()
+                .map(this::response)
+                .collect(Collectors.toList());
+
+        return Header.OK(itemList);
+    }
+
+    private ItemApiResponse response(Item item) {
         ItemApiResponse body = ItemApiResponse.builder()
                 .id(item.getId())
                 .status(item.getStatus())
@@ -91,6 +108,6 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 .partnerId(item.getPartner().getId())
                 .build();
 
-        return Header.OK(body);
+        return body;
     }
 }

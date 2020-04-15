@@ -5,10 +5,14 @@ import com.example.study.model.enumclass.UserStatus;
 import com.example.study.model.network.Header;
 import com.example.study.model.network.request.UserApiRequest;
 import com.example.study.model.network.response.UserApiResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
@@ -32,13 +36,15 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         User newUser = baseRepository.save(user);
 
         // 3. 생성된 데이터를 기준으로 UserApiResponse return
-        return response(newUser);
+        return Header.OK(response(newUser));
     }
 
     @Override
     public Header<UserApiResponse> read(Long id) { // 람다식 사용
         return baseRepository.findById(id)
                 .map(user -> response(user))
+                .map(userApiResponse -> Header.OK(userApiResponse))
+                //.map(Header::OK)
                 .orElseGet(
                         () -> Header.ERROR("데이터 없음")
                 );
@@ -64,6 +70,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         })
                 .map(user -> baseRepository.save(user)) // // 3. update
                 .map(updateUser -> response(updateUser)) // 4. userApiResponse return
+                .map(Header::OK)
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
@@ -81,7 +88,18 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
         }).orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
-    private Header<UserApiResponse> response(User user) {
+    @Override
+    public Header<List<UserApiResponse>> search(Pageable pageable) {
+        Page<User> users = baseRepository.findAll(pageable);
+
+        List<UserApiResponse> userApiResponseList = users.stream()
+                .map(user -> response(user))
+                .collect(Collectors.toList());
+
+        return Header.OK(userApiResponseList);
+    }
+
+    private UserApiResponse response(User user) {
         // user -> userApiResponse
         UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())
@@ -95,7 +113,7 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                 .build();
 
         // Header + data return
-        return Header.OK(userApiResponse);
+        return userApiResponse;
     }
 
 }
